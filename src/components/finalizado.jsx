@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import React from 'react';
-import Alien from '../assets/aliens.svg';
+import Alien from '/assets/aliens.svg';
 
 
 const Finalizado = ({ preguntas , setPreguntas, pageActual, setPageActual, puntos, setPuntos }) => {

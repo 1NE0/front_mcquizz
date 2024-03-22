@@ -58,7 +58,7 @@ export const FirstView = ({ pageActual, setPageActual , setPreguntas, preguntas}
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         className="mx-auto w-52"
-                        src="src/assets/logo.png"
+                        src="/assets/logo.png"
                     />
                     <h1 className="dark:text-white mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         Mejora tu cultura general con este juego
