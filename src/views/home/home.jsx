@@ -4,6 +4,7 @@ import { FirstView } from '../../components/firstView';
 import { QuestionForm } from '../../components/game';
 import Finalizado from '../../components/finalizado';
 import { Darkmode } from '../../components/darkmode';
+import Ranking from '../../components/ranking';
 
 const Home = () => { // Hook para alternar el modo de color
 
@@ -24,32 +25,40 @@ const Home = () => { // Hook para alternar el modo de color
 
   return (
     <>
-    <section className='h-screen bg-indigo-50 dark:bg-gray-800'>
-      {pageActual === "home" && <FirstView 
-        pageActual={pageActual}
-        setPageActual={setPageActual} 
-        setPreguntas={setPreguntas}
-        preguntas={preguntas}
-        puntos={puntos}
-        setPuntos={setPuntos}
-      />}
-      {pageActual === "preguntas" && <QuestionForm 
-        preguntas={preguntas}
-        setPreguntas={setPreguntas}
-        pageActual={pageActual} 
-        setPageActual={setPageActual} 
-        puntos={puntos}
-        setPuntos={setPuntos}
-      />}
-      {pageActual === "finalizado" && <Finalizado 
-        preguntas={preguntas}
-        setPreguntas={setPreguntas}
-        pageActual={pageActual} 
-        setPageActual={setPageActual} 
-        puntos={puntos}
-        setPuntos={setPuntos}
-      />}
-
+    <section className='h-screen bg-indigo-50 dark:bg-gray-800 flex items-center justify-center'>
+      
+        {pageActual === "home" && <FirstView 
+          pageActual={pageActual}
+          setPageActual={setPageActual} 
+          setPreguntas={setPreguntas}
+          preguntas={preguntas}
+          puntos={puntos}
+          setPuntos={setPuntos}
+        />}
+        {pageActual === "preguntas" && <QuestionForm 
+          preguntas={preguntas}
+          setPreguntas={setPreguntas}
+          pageActual={pageActual} 
+          setPageActual={setPageActual} 
+          puntos={puntos}
+          setPuntos={setPuntos}
+        />}
+        {pageActual === "finalizado" && <Finalizado 
+          preguntas={preguntas}
+          setPreguntas={setPreguntas}
+          pageActual={pageActual} 
+          setPageActual={setPageActual} 
+          puntos={puntos}
+          setPuntos={setPuntos}
+        />}
+        {pageActual === "ranking" && <Ranking 
+          preguntas={preguntas}
+          setPreguntas={setPreguntas}
+          pageActual={pageActual} 
+          setPageActual={setPageActual} 
+          puntos={puntos}
+          setPuntos={setPuntos}
+        />}
       <Darkmode darkmode={darkmode} setDarkmode={setDarkmode}/>
     </section>
     </>

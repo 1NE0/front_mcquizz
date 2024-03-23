@@ -68,6 +68,7 @@ export const QuestionForm = ({ preguntas , setPreguntas, pageActual, setPageActu
         setRespuestaSeleccionada(null); // Reiniciar la respuesta seleccionada para la nueva pregunta
       } else {
         console.log('¡Cuestionario completado!');
+
         setPageActual("finalizado");
         // Aquí podrías mostrar un mensaje de finalización o realizar alguna acción adicional
       }
@@ -82,6 +83,11 @@ export const QuestionForm = ({ preguntas , setPreguntas, pageActual, setPageActu
 
     
   };
+
+
+  const sendRegistro = () => {
+    
+  }
 
 
 

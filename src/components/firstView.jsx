@@ -9,9 +9,18 @@ export const FirstView = ({ pageActual, setPageActual , setPreguntas, preguntas}
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
     const [categoriaNoSeleccionada , setErrorCategoriaNoSeleccionada] = useState(false)
     const [cargandoCategorias, setCargandoCategorias ] = useState(true);
-    
+    const [nombre, setNombre] = useState("");
+
     useEffect(() => {
         AOS.init();
+
+        // get user
+        const user = loadFromLocalStorage("user");
+        if(user){
+            setNombre(user["nombre"]);
+        }
+
+        // obtener categorias
         setCargandoCategorias(true);
         // Ejemplo de cómo utilizar el hook para realizar una solicitud al cargar el componente
         //console.log("Cargando categorias...");
@@ -39,7 +48,18 @@ export const FirstView = ({ pageActual, setPageActual , setPreguntas, preguntas}
                 setErrorCategoriaNoSeleccionada(true);
                 return 0;
             }
+
+            // buscar si ya existe el usuario
+            const user= loadFromLocalStorage("user");
+
+            if(!user){
+                const userTraido = await sendRequest("/crearUsuario", "POST", { nombre, email });
+                saveToLocalStorage("user", userTraido);
+            }
+
+            // await sendRequest("/ranking", "POST", { idCategoria: selectedCategory.value, idUsuario: user_id , puntuacion: });
             //const user = await sendRequest("/crearUsuario", "POST", { nombre, email });
+
 
             // buscar preguntas con esta categoria
             const preguntas = await sendRequest("/preguntas/categorias/" + categoriaSeleccionada, "GET");
@@ -57,9 +77,25 @@ export const FirstView = ({ pageActual, setPageActual , setPreguntas, preguntas}
         setCategoriaSeleccionada(event.target.value);
     };
 
+      // Función para guardar datos en el local storage
+    const saveToLocalStorage = (key, value) => {
+        localStorage.setItem(key, JSON.stringify(value));
+    };
+
+    // Función para cargar datos desde el local storage
+    const loadFromLocalStorage = (key) => {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : null;
+    };
+
     return (
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-                
+
+        <div className='h-auto' style={{width: '100%'}}>
+            {/* Contenido */}
+            <div className="flex min-h-full flex-1 flex-col justify-center  lg:px-8">
+                <div className="w-96 flex sm:mx-auto">
+                    <button onClick={() => setPageActual("ranking")} className='w-auto h-auto bg-white p-2 pl-5 pr-5 text-black rounded hover:bg-indigo-600 transition duration-300 hover:text-white shadow-md' > Ranking </button>
+                </div>
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     {/* <img 
                         data-aos="fade-in"
@@ -82,7 +118,7 @@ export const FirstView = ({ pageActual, setPageActual , setPreguntas, preguntas}
                                 <label data-aos="fade-left" htmlFor="email" className="dark:text-zinc-400 text-left block text-sm font-medium leading-6 text-gray-900">
                                     Ingresa tu nombre
                                 </label>
-                                <input data-aos="fade-right" type="name" name="nombre" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Mi papá se llama Edgar" required />
+                                <input value={nombre ? nombre : ''} onChange={(e) => setNombre(e.target.value)}  data-aos="fade-right" type="name" name="nombre" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Mi papá se llama Edgar" required />
                             </div>
                             <div>
                                 <label data-aos="fade-left" htmlFor="email" className="dark:text-zinc-400 text-left block text-sm font-medium leading-6 text-gray-900">
@@ -130,9 +166,11 @@ export const FirstView = ({ pageActual, setPageActual , setPreguntas, preguntas}
                         </form>
 
                         <p className="mt-5 text-center text-sm text-gray-500">
-                            Creado por Sebastian Ortiz - 2024
+                            Creado por <a className='hover:text-indigo-500' href="https://sebastianortiz.dev" target='_blank'>Sebastian Ortiz</a> - 2024
                         </p>
                     </div>
             </div>
+        </div>
+            
     );
 }
